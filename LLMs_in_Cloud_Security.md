@@ -1,6 +1,6 @@
 # LLMs in Cloud Security: A Critical Analysis from First Principles
 
-I recently came across an article on htcd.com titled "[Power of LLM Reasoning](https://www.htcd.com/post/power-of-llm-reasoning)" that proposed using Large Language Models for cloud security operations. As someone who has both implemented LLM applications and worked with cloud infrastructure, the proposal immediately caught my attention - not because it was convincing, but because it raised some fundamental questions about how we approach cloud security solutions.
+I recently came across an article on htcd.com titled "[Power of LLM Reasoning](https://www.htcd.com/post/power-of-llm-reasoning)" that proposed using Large Language Models for cloud security operations. As someone interested in the applications, the proposal immediately caught my attention - not because it was convincing, but because it raised some fundamental questions about how we approach these solutions.
 
 ## Understanding the Core Requirements
 
