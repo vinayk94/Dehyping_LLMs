@@ -94,6 +94,7 @@ Data Flow Analysis: Understanding how information moves through different system
 This mapping serves two crucial purposes: defining modernization scope and building a roadmap for incremental changes.
 
 
+```mermaid
 flowchart TD
     subgraph Initial["Initial Discovery Phase"]
         A[System Cataloging] --> B[Technology Inventory]
@@ -129,6 +130,7 @@ flowchart TD
     %% Parallel activities and feedback loops
     Capability <--> BusinessRules
     Understanding <--> BusinessRules
+```
 
 ## The Value-Driven Approach
 
@@ -443,9 +445,6 @@ The architectural patterns and approaches discussed here provide valuable insigh
 
 While our context differs from the mainframe systems discussed in the article, the core challenges remain similar: understanding large volumes of legacy code, extracting business rules, and bridging technical and business understanding. The success of CodeConcise in reducing analysis time (from 6 weeks to 2 weeks for 10,000 lines) suggests similar approaches could help tackle our 20,000 stored procedures modernization effort.
 
-## References
-
-Ferri, A., Coggrave, T., & Sheth, S. (2024). Legacy Modernization meets GenAI.
 
 ## References
 
