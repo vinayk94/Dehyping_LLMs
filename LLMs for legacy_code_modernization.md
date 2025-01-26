@@ -146,9 +146,9 @@ However, GenAI isn't universally beneficial. The article explicitly identifies a
 - Dead Code Detection: "We see little or no use in applying GenAI to the problem" because existing static analysis tools like IntelliJ and Sonar better leverage code's structured nature
 - Runtime Analysis: APM tools provide more reliable data about system behavior during execution, where GenAI can't improve on direct runtime observation
 
-## CodeConcise: A Technical Deep Dive
+# CodeConcise: A Technical Deep Dive
 
-### The Foundation: Code as Data
+## The Foundation: Code as Data
 CodeConcise's architecture fundamentally shifts how we analyze code by treating it as structured data rather than text. This approach is crucial because:
 - It enables deeper analysis of code structure and relationships
 - It allows understanding of embedded business rules
@@ -156,7 +156,7 @@ CodeConcise's architecture fundamentally shifts how we analyze code by treating 
 
 At its core, the system uses Abstract Syntax Trees (ASTs) - a tree representation of code's syntactic structure. This choice is deliberate because it helps analyze code without getting lost in formatting or comments, particularly valuable for understanding stored procedures' logic and data flows.
 
-### System Architecture
+## System Architecture
 
 ```mermaid
 flowchart TB
@@ -199,9 +199,9 @@ flowchart TB
     Nodes --> VS
 ```
 
-### Core Architecture Components
+## Core Architecture Components
 
-#### The Ingestion Pipeline
+### The Ingestion Pipeline
 The first technical challenge in understanding legacy systems is making sense of their structure. The ingestion pipeline addresses this through:
 
 1. Abstract Syntax Trees (ASTs)
@@ -215,7 +215,7 @@ The first technical challenge in understanding legacy systems is making sense of
    - Enables efficient use of LLM context windows
    - Captures relationships like "code in this node transfers control to code in that node"
 
-#### The Comprehension Pipeline
+### The Comprehension Pipeline
 Building on the structured representation, this pipeline adds layers of understanding through:
 
 1. Graph Traversal
@@ -237,36 +237,111 @@ Building on the structured representation, this pipeline adds layers of understa
    - Structural edges reveal code organization
    - Contextual navigation across both dimensions
 
-### Practical Implementation Benefits
+# CodeConcise in Practice: From Authorization to Stored Procedures
 
-The system demonstrates concrete value in practice:
-1. Significant time reduction (6 weeks → 2 weeks for 10,000 lines)
-2. Potential saving of 240 FTE years for large programs
-3. Ability to explain complex queries to Business Analysts
-4. Bridge between technical implementation and business understanding
+## Understanding the Authorization Example
+The article demonstrates CodeConcise's capabilities through an authorization system example, showing how each component works in practice:
 
-### Application to Stored Procedures
+```mermaid
+flowchart TD
+    subgraph Input["Source Analysis"]
+        A[Authorization Code] --> B[AST Generation]
+        C[Documentation] --> B
+    end
+    
+    subgraph AST["AST Structure"]
+        D[Method Calls]
+        E[Control Flow]
+        F[Data Access]
+    end
+    
+    B --> D
+    B --> E
+    B --> F
+```
 
-The architecture offers specific advantages for stored procedure modernization:
+When analyzing authorization code, the system:
+1. Identifies method calls and control transfers
+2. Maps conditional branches and their relationships
+3. Connects related documentation to code segments
 
+The knowledge graph builds relationships by identifying:
+
+| Node Type | Example | Relationships |
+|-----------|---------|---------------|
+| Code Node | Authorization Method | Calls → Data Access Methods |
+| Control Flow | Role Validation | Dependencies → User Permissions |
+| Data Access | Card Details Query | Connects → Data Structures |
+
+## Application to Stored Procedures
+
+The success of CodeConcise with authorization systems provides a blueprint for stored procedure modernization. Consider this stored procedure example:
+
+```sql
+CREATE PROCEDURE GetCustomerOrders
+AS
+BEGIN
+    SELECT * FROM Orders
+    WHERE CustomerID = @CustomerID
+    AND OrderStatus = 'Active'
+END
+```
+
+The system processes stored procedures by:
 1. AST Processing
-   - Parses SQL logic across thousands of procedures
+   - Parses SQL into structured AST representation
+   - Identifies data relationships (Orders, CustomerID)
+   - Maps business rules (OrderStatus = 'Active')
    - Understands procedure logic and data flows
-   - Identifies embedded business rules
 
-2. Knowledge Graph Structure
-   - Maps dependencies between procedures and tables
+2. Knowledge Graph Integration
+   - Connects procedure calls (procedure A calls procedure B)
+   - Maps data dependencies (tables, parameters)
+   - Links to business documentation
    - Captures business process relationships
-   - Enables systematic analysis of procedure interactions
 
-3. LLM Enhancement
-   - Translates SQL logic into business terms
-   - Provides context for complex queries
-   - Facilitates understanding of procedure purposes
+3. Query Understanding
+   When asked "How does order processing work?", the system:
+   - Identifies relevant stored procedures
+   - Maps procedure call chains
+   - Shows data flow between procedures
+   - Explains business logic in context
 
-4. Systematic Analysis
-   - Identifies modernization patterns
-   - Maps procedure relationships
-   - Enables strategic modernization planning
+```mermaid
+flowchart LR
+    A[Vector Search] --> B[Code Identification]
+    B --> C[Context Gathering]
+    C --> D[Response Generation]
+    
+    subgraph Analysis
+        B --> E[Procedure Analysis]
+        B --> F[Data Flow]
+    end
+    
+    subgraph Context
+        C --> G[Related Procedures]
+        C --> H[Business Rules]
+    end
+```
 
-The success with COBOL systems (reducing analysis time from 6 weeks to 2 weeks) suggests similar efficiency gains could be achieved when modernizing 20,000 stored procedures.
+## Implementation Results and Benefits
+
+The article's case study with COBOL/IDMS systems demonstrates significant benefits that can extend to stored procedure modernization:
+
+1. Efficiency Improvements
+   - Reduced analysis time from 6 weeks to 2 weeks for 10,000 lines
+   - Potential saving of 240 FTE years for large programs
+   - Enhanced business analyst autonomy
+   - Reduced SME dependencies
+
+2. Quality Enhancements
+   - Improved documentation accuracy
+   - Better understanding of complex queries
+   - Bridged technical-business communication gap
+   - Consistent, context-aware responses
+
+These results suggest similar efficiency gains could be achieved when modernizing 20,000 stored procedures, particularly in:
+- Understanding complex procedure relationships
+- Documenting business rules embedded in SQL
+- Planning modernization sequences
+- Maintaining system knowledge
