@@ -67,44 +67,62 @@ The challenge of modernizing stored procedures mirrors the broader legacy system
 
 Knowledge about these procedures exists in multiple dimensions. The static code reveals the implementation details, but understanding why certain approaches were chosen often requires deep system knowledge. Runtime behavior shows how procedures actually operate in production, while SME knowledge provides crucial context about business rules and historical decisions that shaped the current implementation.
 
-## Applying the Modernization Framework to Databases
+# Applying the Modernization Framework to Stored Procedures
 
-The modernization process adapts to the unique characteristics of stored procedures while following our established framework. During initial discovery, teams focus on understanding the database landscape through comprehensive system analysis and knowledge mapping. This involves documenting not just the procedures themselves, but their relationships with applications, their usage patterns, and their role in business processes.
+The modernization process adapts our established framework to the unique characteristics of stored procedures. Similar to general legacy systems, procedures accumulate years of business logic and data transformations, but their distributed nature across database systems adds specific complexity to each framework phase.
 
-System understanding becomes particularly crucial when dealing with stored procedures. Static analysis reveals procedure dependencies and data access patterns, while dynamic analysis uncovers real-world usage characteristics and performance implications. This dual approach helps teams understand both the technical implementation and business context of database operations.
+## Framework Application to Database Systems
 
-The process flow for stored procedure modernization can be visualized as:
+During initial discovery, teams must understand not just individual procedures, but their intricate web of relationships. A stored procedure rarely exists in isolation - it may call other procedures, share common data structures, and implement overlapping business rules. As Ferri et al. (2024) note, this interconnected nature makes understanding the full scope crucial before any modernization attempts.
+
+The process adapts each framework phase to database-specific needs:
 
 ```mermaid
 flowchart TD
-    subgraph Database["Database Understanding"]
-        A[Procedure Analysis] --> B[Usage Patterns]
-        B --> C[Performance Profiles]
+    subgraph Discovery["Initial Discovery"]
+        A[Procedure Inventory] --> B[Dependency Mapping]
+        B --> C[Usage Analysis]
+        C --> D[Data Structure Review]
     end
     
-    subgraph Business["Business Context"]
-        D[Data Flows] --> E[Business Rules]
-        E --> F[Integration Points]
+    subgraph Understanding["System Understanding"]
+        E[Static Analysis] --> F[Data Flow Analysis]
+        G[Dynamic Analysis] --> F
+        F --> H[Business Logic Identification]
+        E --> I[Procedure Dependencies]
+        G --> J[Performance Patterns]
     end
     
-    subgraph Implementation["Modernization Planning"]
-        G[Capability Mapping] --> H[Transformation Strategy]
-        H --> I[Migration Planning]
+    subgraph Extraction["Business Rule Extraction"]
+        K[Transaction Logic] --> L[Data Validation Rules]
+        L --> M[Integration Points]
+        M --> N[Business Constraints]
     end
     
-    Database --> Business
-    Business --> Implementation
-    Implementation --> Database
+    Discovery --> Understanding
+    Understanding --> Extraction
+    Extraction -.-> Discovery
 ```
 
-The relationship between modernization phases and database-specific considerations can be understood through this framework:
+Each phase addresses specific stored procedure challenges:
 
-| Modernization Phase | Database Focus | Key Considerations |
-|-------|------------|-----------------|
-| System Discovery | Database ecosystem analysis and procedure cataloging | Complex procedure relationships require careful dependency mapping to avoid breaking existing integrations |
-| Understanding | Data flow analysis and performance characterization | Business logic often embedded deeply within procedures demands thorough analysis of both code and runtime behavior |
-| Business Rules | Transaction boundaries and data validation patterns | Procedures frequently implement critical business rules through data constraints and transformations |
-| Capability Analysis | Integration patterns and system boundaries | Understanding how procedures support business capabilities helps prioritize modernization efforts |
+| Framework Phase | Stored Procedure Focus | Specific Challenges | Approach |
+|----------------|------------------------|-------------------|-----------|
+| Initial Discovery | - Procedure inventory across databases<br>- Call hierarchies<br>- Data dependencies | - Distributed procedures<br>- Complex dependencies<br>- Hidden relationships | - Systematic cataloging<br>- Cross-database mapping<br>- Access pattern analysis |
+| System Understanding | - Data flow patterns<br>- Transaction boundaries<br>- Performance characteristics | - Complex SQL logic<br>- Runtime dependencies<br>- Performance implications | - Static SQL analysis<br>- Dynamic execution monitoring<br>- Impact analysis |
+| Business Rule Extraction | - Data validation rules<br>- Transaction logic<br>- Business constraints | - Embedded business logic<br>- Data integrity rules<br>- Cross-procedure rules | - SQL pattern analysis<br>- Transaction flow mapping<br>- Constraint documentation |
+
+This adapted framework helps teams:
+1. Systematically map procedure relationships and dependencies
+2. Understand both static structure and runtime behavior
+3. Extract business rules embedded in SQL logic
+4. Plan modernization while maintaining data integrity
+
+The framework's value becomes particularly evident when dealing with stored procedures because it:
+- Addresses both technical and business aspects of database operations
+- Maintains focus on data integrity and system reliability
+- Provides clear progression from understanding to transformation
+- Enables incremental modernization of interdependent procedures
 
 # Understanding Where and Why GenAI Aids Modernization
 
