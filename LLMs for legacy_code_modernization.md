@@ -247,24 +247,6 @@ When processing code, the components work together in sequence:
 ## Understanding the Authorization Example
 The article demonstrates CodeConcise's capabilities through an authorization system example, showing how each component works in practice:
 
-```mermaid
-flowchart TD
-    subgraph Input["Source Analysis"]
-        A[Authorization Code] --> B[AST Generation]
-        C[Documentation] --> B
-    end
-    
-    subgraph AST["AST Structure"]
-        D[Method Calls]
-        E[Control Flow]
-        F[Data Access]
-    end
-    
-    B --> D
-    B --> E
-    B --> F
-```
-
 When a business analyst asks "how does authorization work when viewing card details?", the system:
 1. Uses vector search in Neo4j to find relevant code nodes
 2. Traverses the knowledge graph through both:
@@ -276,7 +258,7 @@ When a business analyst asks "how does authorization work when viewing card deta
    - Package context
    - Data structures
 
-This example shows how the components enable contextual understanding of complex code.
+The above example shows how the components enable contextual understanding of complex code.
 
 ## Application to Stored Procedures
 
