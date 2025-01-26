@@ -237,6 +237,11 @@ Building on the structured representation, this pipeline adds layers of understa
    - Structural edges reveal code organization
    - Contextual navigation across both dimensions
 
+When processing code, the components work together in sequence:
+1. The ingestion pipeline first converts code into ASTs and builds the graph
+2. The comprehension pipeline then traverses and enriches this graph
+3. The knowledge graph enables querying this enriched understanding
+
 # CodeConcise in Practice: From Authorization to Stored Procedures
 
 ## Understanding the Authorization Example
@@ -260,18 +265,18 @@ flowchart TD
     B --> F
 ```
 
-When analyzing authorization code, the system:
-1. Identifies method calls and control transfers
-2. Maps conditional branches and their relationships
-3. Connects related documentation to code segments
+When a business analyst asks "how does authorization work when viewing card details?", the system:
+1. Uses vector search in Neo4j to find relevant code nodes
+2. Traverses the knowledge graph through both:
+   - Behavioral edges (showing how code interacts)
+   - Structural edges (showing code organization)
+3. Provides comprehensive context including:
+   - The authorization code itself
+   - Related methods
+   - Package context
+   - Data structures
 
-The knowledge graph builds relationships by identifying:
-
-| Node Type | Example | Relationships |
-|-----------|---------|---------------|
-| Code Node | Authorization Method | Calls → Data Access Methods |
-| Control Flow | Role Validation | Dependencies → User Permissions |
-| Data Access | Card Details Query | Connects → Data Structures |
+This example shows how the components enable contextual understanding of complex code.
 
 ## Application to Stored Procedures
 
@@ -341,7 +346,21 @@ The article's case study with COBOL/IDMS systems demonstrates significant benefi
    - Consistent, context-aware responses
 
 These results suggest similar efficiency gains could be achieved when modernizing 20,000 stored procedures, particularly in:
-- Understanding complex procedure relationships
-- Documenting business rules embedded in SQL
-- Planning modernization sequences
-- Maintaining system knowledge
+1. More efficient analysis of database code
+2. Better understanding of procedure relationships
+3. Clearer mapping of data dependencies
+4. Improved modernization planning
+
+## Implementation Considerations
+
+The article notes important adaptations needed for real client code:
+1. Supporting different technology stacks
+2. Handling client-specific terminology
+3. Adapting to various code organization patterns
+
+For stored procedures, similar adaptations would be needed for:
+- Different SQL dialects
+- Various database architectures
+- Complex procedure dependencies
+
+This analysis combines the article's proven framework with technical extensions for stored procedure modernization, maintaining the core benefits while addressing database-specific challenges.
